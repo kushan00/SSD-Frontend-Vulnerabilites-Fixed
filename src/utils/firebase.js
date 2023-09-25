@@ -4,13 +4,13 @@ import { getStorage } from "firebase/storage";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCJhJjV4mmh5FeQKm_6lM-nIA3irxPAiAE",
-  authDomain: "spm-ser003.firebaseapp.com",
-  projectId: "spm-ser003",
-  storageBucket: "spm-ser003.appspot.com",
-  messagingSenderId: "1077840697866",
-  appId: "1:1077840697866:web:b6af49415ae27240e3ddf3",
-  measurementId: "G-0YKV8J12D6"
+  apiKey: "AIzaSyBh75nRxiO1sVsx2cG-tFUX4FqBkVsmR38",
+  authDomain: "ssd-frontend.firebaseapp.com",
+  projectId: "ssd-frontend",
+  storageBucket: "ssd-frontend.appspot.com",
+  messagingSenderId: "488761653003",
+  appId: "1:488761653003:web:e92e8f8cafac9ded4b940e",
+  measurementId: "G-29HHTD0HRL"
 };
 
 // Initialize Firebase
