@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { RegisterUsers } from "../../services/AuthServices.js";
 import Swal from 'sweetalert2';
-import { ValidateSignUp } from "./Validation";
+import { ValidateSignUp } from "./ValidateSignUp.js";
 import "./responsive.css";
 
 const Register = () => {

@@ -24,7 +24,7 @@ import { ValidateAddNewWorkout, ValidateAddNewMeal } from "./Validation";
 import {GetOneUserDetails} from "../../services/UserServices";
 import {createWorkout, getAllWorkouts, deleteWorkout, getWorkoutById, updateWorkout} from "../../services/WorkoutServices";
 import {createDiet, getAllDiets, deleteDiet, getDietById, updateDiet} from "../../services/DietServices";
-import { ValidateSignUp } from "../auth/Validation";
+import { ValidateSignUp } from "../auth/ValidateSignUp";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 
 

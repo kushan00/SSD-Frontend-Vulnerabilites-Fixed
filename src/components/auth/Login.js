@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginUsers } from "../../services/AuthServices.js";
 import Swal from 'sweetalert2';
+import { ValidateLogin } from "./ValidateLogin.js";
 import "./responsive.css";
 import { AuthContextProvider } from "../context/Auth.context.js";
 
@@ -22,27 +23,47 @@ const Login = () => {
 	const onSubmit = async (e) => {
 
 		e.preventDefault();
+
+		let validate = ValidateLogin(formData);
+		let msg = validate?.message;
+		if(validate.status == false)
+		{
+			Swal.fire({
+                toast: true,
+                icon: 'warning',
+                html: `<span>${msg}</span>`,
+                animation: true,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: false,
+            });
+		}
+
+		else{
         
-        let data = await LoginUsers(formData);
-        console.log("data",data)
-        if(data?.data?.status == 1)
-        {
-        localStorage.setItem("token",data?.data?.data?.token);
-        localStorage.setItem("userRole",data?.data?.data?.userRole);
-        localStorage.setItem("user",data?.data?.data?.user);
-        localStorage.setItem("userID",data?.data?.data?.userID);
-        localStorage.setItem("_id",data?.data?.data?._id);
-        navigate("/");
-		window.location.reload();
-        }
-        else
-        {
-            Swal.fire({
-                icon: 'error',
-                title: 'Login Failed..!',
-                text: `${data?.data?.message}`,
-            })
-        }
+			let data = await LoginUsers(formData);
+			console.log("data",data)
+			if(data?.data?.status == 1)
+			{
+			localStorage.setItem("token",data?.data?.data?.token);
+			localStorage.setItem("userRole",data?.data?.data?.userRole);
+			localStorage.setItem("user",data?.data?.data?.user);
+			localStorage.setItem("userID",data?.data?.data?.userID);
+			localStorage.setItem("_id",data?.data?.data?._id);
+			navigate("/");
+			window.location.reload();
+			}
+			else
+			{
+				Swal.fire({
+					icon: 'error',
+					title: 'Login Failed..!',
+					text: `${data?.data?.message}`,
+				})
+			}
+
+		}
 
 	};
 
