@@ -24,55 +24,33 @@ const Login = () => {
 
 		e.preventDefault();
 
-		const otpAPI = '/verify-otp'
+		let data = await LoginUsers(formData);
+		console.log("data",data)
+		if(data?.data?.status == 1)
+		{
+		localStorage.setItem("token",data?.data?.data?.token);
+		localStorage.setItem("userRole",data?.data?.data?.userRole);
+		localStorage.setItem("user",data?.data?.data?.user);
+		localStorage.setItem("userID",data?.data?.data?.userID);
+		localStorage.setItem("_id",data?.data?.data?._id);
 
-		const inputValue = fetch(otpAPI)
-			.then(response => response.json())
-			.then(data => data.ip)
+		setCookie("token",data?.data?.data?.token,1);
+		setCookie("userRole",data?.data?.data?.userRole,1);
+		setCookie("user",data?.data?.data?.user,1);
+		setCookie("userID",data?.data?.data?.userID,1);
+		setCookie("_id",data?.data?.data?._id,1);
 
-		const { value: otp } = await Swal.fire({
-			title: 'Enter your OTP code here',
-			input: 'text',
-			inputLabel: 'Your OTP code',
-			inputValue: inputValue,
-			showCancelButton: true,
-			inputValidator: (value) => {
-				if (!value) {
-					return 'You need to write something!'
-				}
-			}
-		})
-
-		if (otp) {
-			Swal.fire(`Your OTP code is : ${otp}`)
+		navigate("/");
+		window.location.reload();
 		}
-		// let data = await LoginUsers(formData);
-		// console.log("data",data)
-		// if(data?.data?.status == 1)
-		// {
-		// localStorage.setItem("token",data?.data?.data?.token);
-		// localStorage.setItem("userRole",data?.data?.data?.userRole);
-		// localStorage.setItem("user",data?.data?.data?.user);
-		// localStorage.setItem("userID",data?.data?.data?.userID);
-		// localStorage.setItem("_id",data?.data?.data?._id);
-
-		// setCookie("token",data?.data?.data?.token,1);
-		// setCookie("userRole",data?.data?.data?.userRole,1);
-		// setCookie("user",data?.data?.data?.user,1);
-		// setCookie("userID",data?.data?.data?.userID,1);
-		// setCookie("_id",data?.data?.data?._id,1);
-
-		// navigate("/");
-		// window.location.reload();
-		// }
-		// else
-		// {
-		//     Swal.fire({
-		//         icon: 'error',
-		//         title: 'Login Failed..!',
-		//         text: `${data?.data?.message}`,
-		//     })
-		// }
+		else
+		{
+		    Swal.fire({
+		        icon: 'error',
+		        title: 'Login Failed..!',
+		        text: `${data?.data?.message}`,
+		    })
+		}
 
 	};
 
