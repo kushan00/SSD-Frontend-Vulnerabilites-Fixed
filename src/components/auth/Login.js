@@ -4,6 +4,7 @@ import { LoginUsers } from "../../services/AuthServices.js";
 import Swal from 'sweetalert2';
 import "./responsive.css";
 import { AuthContextProvider } from "../context/Auth.context.js";
+import { setCookie } from "../../utils/Cookies.js";
 
 const Login = () => {
 
@@ -32,6 +33,13 @@ const Login = () => {
         localStorage.setItem("user",data?.data?.data?.user);
         localStorage.setItem("userID",data?.data?.data?.userID);
         localStorage.setItem("_id",data?.data?.data?._id);
+
+		setCookie("token",data?.data?.data?.token,1);
+        setCookie("userRole",data?.data?.data?.userRole,1);
+        setCookie("user",data?.data?.data?.user,1);
+        setCookie("userID",data?.data?.data?.userID,1);
+        setCookie("_id",data?.data?.data?._id,1);
+
         navigate("/");
 		window.location.reload();
         }
