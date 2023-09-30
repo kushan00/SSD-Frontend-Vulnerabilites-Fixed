@@ -6,6 +6,8 @@ const LoginURL = StartUrl?.StartUrl + "/gym/signin";
 const RegisterURL = StartUrl?.StartUrl + "/gym/signup";
 const AuthURL = StartUrl?.StartUrl + "/gym/auth";
 const UpdateAdminURL = StartUrl?.StartUrl + "/gym/update-admin/";
+const SENDOTPURL = StartUrl?.StartUrl + "/gym/send-otp";
+const VERIFYOTPURL = StartUrl?.StartUrl + "/gym/verify-otp";
 
 export async function LoginUsers(data){
     const alldata = {
@@ -99,5 +101,26 @@ export async function updateAdmin(id,data) {
   };
 
   return await axios.put(UpdateAdminURL + id, alldata);
+
+}
+
+export async function sendOTP(data) {
+  const alldata = {
+      password: data?.password,
+      email: data?.email,
+  };
+
+  return await axios.post(SENDOTPURL, alldata);
+
+}
+
+
+export async function verifyOTP(data) {
+  const alldata = {
+      otp: data?.otp,
+      email: data?.email,
+  };
+
+  return await axios.post(VERIFYOTPURL, alldata);
 
 }
