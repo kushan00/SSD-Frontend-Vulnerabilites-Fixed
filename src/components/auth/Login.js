@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { LoginUsers } from "../../services/AuthServices.js";
+import { LoginUsers , verifyOTP , sendOTP } from "../../services/AuthServices.js";
 import Swal from 'sweetalert2';
 import "./responsive.css";
 import { AuthContextProvider } from "../context/Auth.context.js";
@@ -24,33 +24,94 @@ const Login = () => {
 
 		e.preventDefault();
 
-		let data = await LoginUsers(formData);
+		let data = await sendOTP(formData);
 		console.log("data",data)
 		if(data?.data?.status == 1)
 		{
-		localStorage.setItem("token",data?.data?.data?.token);
-		localStorage.setItem("userRole",data?.data?.data?.userRole);
-		localStorage.setItem("user",data?.data?.data?.user);
-		localStorage.setItem("userID",data?.data?.data?.userID);
-		localStorage.setItem("_id",data?.data?.data?._id);
+			Swal.fire(
+				'OTP sent.',
+				'OTP sent successfull...!',
+				'success'
+			  )
+			const { value: otp } = await Swal.fire({
+				title: 'Enter your OTP code here',
+				input: 'text',
+				inputLabel: 'Your OTP code',
+				inputValue: "Enter your OTP",
+				showCancelButton: true,
+				inputValidator: (value) => {
+					if (!value) {
+						return 'You need to write something!'
+					}
+				}
+			})
+	
+			if (otp) {
 
-		setCookie("token",data?.data?.data?.token,1);
-		setCookie("userRole",data?.data?.data?.userRole,1);
-		setCookie("user",data?.data?.data?.user,1);
-		setCookie("userID",data?.data?.data?.userID,1);
-		setCookie("_id",data?.data?.data?._id,1);
+				let payload = {
+					email:formData.email,
+					otp:otp
+				}
 
-		navigate("/");
-		window.location.reload();
+				let data = await verifyOTP(payload);
+				if(data?.data?.status == 1)
+				{
+					Swal.fire(
+						'OTP Verified.',
+						'OTP verified successfull...!',
+						'success'
+					  )
+					let data = await LoginUsers(formData);
+					console.log("data",data)
+					if(data?.data?.status == 1)
+					{
+					localStorage.setItem("token",data?.data?.data?.token);
+					localStorage.setItem("userRole",data?.data?.data?.userRole);
+					localStorage.setItem("user",data?.data?.data?.user);
+					localStorage.setItem("userID",data?.data?.data?.userID);
+					localStorage.setItem("_id",data?.data?.data?._id);
+
+					setCookie("token",data?.data?.data?.token,1);
+					setCookie("userRole",data?.data?.data?.userRole,1);
+					setCookie("user",data?.data?.data?.user,1);
+					setCookie("userID",data?.data?.data?.userID,1);
+					setCookie("_id",data?.data?.data?._id,1);
+
+					navigate("/");
+					window.location.reload();
+					}
+					else
+					{
+					    Swal.fire({
+					        icon: 'error',
+					        title: 'Login Failed..!',
+					        text: `${data?.data?.message}`,
+					    })
+					}
+				}
+				else
+				{
+					Swal.fire(
+						'OTPFailed.',
+						'OTP send Failed...!',
+						'error'
+					  )
+				}
+				
+			}
 		}
 		else
 		{
-		    Swal.fire({
-		        icon: 'error',
-		        title: 'Login Failed..!',
-		        text: `${data?.data?.message}`,
-		    })
+			Swal.fire(
+				'OTP Not Valid.',
+				'OTP verify Failed...!',
+				'error'
+			  )
 		}
+
+		
+
+		
 
 	};
 
