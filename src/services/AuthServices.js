@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import bcrypt from "bcrypt";
 import StartUrl from "../configs/Url.json";
 
 const LoginURL = StartUrl?.StartUrl + "/gym/signin";
@@ -10,9 +10,10 @@ const SENDOTPURL = StartUrl?.StartUrl + "/gym/send-otp";
 const VERIFYOTPURL = StartUrl?.StartUrl + "/gym/verify-otp";
 
 export async function LoginUsers(data){
+    let hashedPassword = bcrypt.hashSync(data?.password,10).toString();
     const alldata = {
         email:data?.email,
-        password:data?.password,
+        password:hashedPassword,
     };
     
     let result;
@@ -36,11 +37,13 @@ export async function LoginUsers(data){
 }
 
 export async function RegisterUsers(data){
+    let hashedPassword = bcrypt.hashSync(data?.password,10).toString();
+
     const alldata = {
         fullName:data?.fullName,
         mobileno:data?.mobileno,
         email:data?.email,
-        password:data?.password,
+        password:hashedPassword,
         weight:data?.weight,
         dateOfBirth:data?.dateOfBirth,
         height:data?.height
