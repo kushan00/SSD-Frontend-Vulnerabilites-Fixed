@@ -21,7 +21,7 @@ import moment from 'moment';
 import Swal from 'sweetalert2';
 import { ValidateAddNewUser } from "./Validation";
 import { GetAllUserDetails , AddNewUsers, updateUser ,DeleteUser } from "../../services/UserServices";
-import { ValidateSignUp } from "../auth/Validation";
+import { ValidateSignUp } from "../auth/ValidateSignUp";
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 
 const HandleUsers = () => {
