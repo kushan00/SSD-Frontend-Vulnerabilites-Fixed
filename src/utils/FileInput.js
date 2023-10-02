@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import storage from "./firebase";
+import storage from "./firebaseStorage.js";
 import check from "../assests/images/check.png";
 
 const FileInput = ({ name, label, value, type, handleInputState, ...rest }) => {
