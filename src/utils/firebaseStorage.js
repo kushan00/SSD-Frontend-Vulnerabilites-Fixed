@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
-
+const apiKey = process.env.API_KEY;
 
 const firebaseConfig = {
   apiKey: "AIzaSyBh75nRxiO1sVsx2cG-tFUX4FqBkVsmR38",

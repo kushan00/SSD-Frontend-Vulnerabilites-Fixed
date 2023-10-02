@@ -26,7 +26,7 @@ import {
   updateInstructor,
   deleteInstructor,
 } from "../../services/InstructorServices";
-import { ValidateSignUp } from "../auth/Validation";
+import { ValidateSignUp } from "../auth/ValidateSignUp";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 
 const HandleInstructors = () => {

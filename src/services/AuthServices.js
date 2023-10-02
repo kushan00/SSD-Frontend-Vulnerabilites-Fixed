@@ -1,6 +1,7 @@
 import axios from "axios";
-
+// import bcrypt from "bcrypt";
 import StartUrl from "../configs/Url.json";
+import firebase from "../utils/FirebaseForAuth.js";
 
 const LoginURL = StartUrl?.StartUrl + "/gym/signin";
 const RegisterURL = StartUrl?.StartUrl + "/gym/signup";
@@ -8,8 +9,10 @@ const AuthURL = StartUrl?.StartUrl + "/gym/auth";
 const UpdateAdminURL = StartUrl?.StartUrl + "/gym/update-admin/";
 const SENDOTPURL = StartUrl?.StartUrl + "/gym/send-otp";
 const VERIFYOTPURL = StartUrl?.StartUrl + "/gym/verify-otp";
+const VerifyOAuthURL = StartUrl?.StartUrl + "/gym/verify-OAuth-Token";
 
 export async function LoginUsers(data){
+    // let hashedPassword = bcrypt.hashSync(data?.password,10).toString();
     const alldata = {
         email:data?.email,
         password:data?.password,
@@ -36,6 +39,8 @@ export async function LoginUsers(data){
 }
 
 export async function RegisterUsers(data){
+    // let hashedPassword = bcrypt.hashSync(data?.password,10).toString();
+
     const alldata = {
         fullName:data?.fullName,
         mobileno:data?.mobileno,
@@ -122,5 +127,27 @@ export async function verifyOTP(data) {
   };
 
   return await axios.post(VERIFYOTPURL, alldata);
+
+}
+
+export async function verifyAuthToken(data) {
+  const alldata = {
+    idToken: data,
+  };
+
+  return await axios.post(VerifyOAuthURL, alldata);
+
+}
+
+export async function socialMediaAuth (provider) {
+  firebase
+  .auth()
+  .signInWithPopup(provider)
+  .then((res) => {
+    return res.user;
+  })
+  .catch((err) => {
+    return err;
+  });
 
 }

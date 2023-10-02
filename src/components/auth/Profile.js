@@ -16,7 +16,7 @@ import {
 } from "reactstrap";
 import UserImage from "../../assests/images/user.png";
 import Swal from 'sweetalert2';
-import { ValidateSignUp } from "./Validation";
+import { ValidateSignUp } from "./ValidateSignUp";
 import "./responsive.css";
 import moment from "moment";
 import { updateInstructor } from "../../services/InstructorServices";
