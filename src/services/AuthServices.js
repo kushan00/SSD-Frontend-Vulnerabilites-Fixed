@@ -1,4 +1,5 @@
 import axios from "axios";
+import CryptoJS from 'crypto-js';
 // import bcrypt from "bcrypt";
 import StartUrl from "../configs/Url.json";
 import firebase from "../utils/FirebaseForAuth.js";
@@ -13,9 +14,10 @@ const VerifyOAuthURL = StartUrl?.StartUrl + "/gym/verify-OAuth-Token";
 
 export async function LoginUsers(data){
     // let hashedPassword = bcrypt.hashSync(data?.password,10).toString();
+    const hashed = CryptoJS.SHA256(data?.password).toString(CryptoJS.enc.Hex);
     const alldata = {
         email:data?.email,
-        password:data?.password,
+        password:hashed,
     };
     
     let result;
@@ -40,12 +42,12 @@ export async function LoginUsers(data){
 
 export async function RegisterUsers(data){
     // let hashedPassword = bcrypt.hashSync(data?.password,10).toString();
-
+    const hashed = CryptoJS.SHA256(data?.password).toString(CryptoJS.enc.Hex);
     const alldata = {
         fullName:data?.fullName,
         mobileno:data?.mobileno,
         email:data?.email,
-        password:data?.password,
+        password:hashed,
         weight:data?.weight,
         dateOfBirth:data?.dateOfBirth,
         height:data?.height
